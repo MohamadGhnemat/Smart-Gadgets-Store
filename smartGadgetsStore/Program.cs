@@ -23,6 +23,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.AddScoped<IRepositorie<Brand>, dbBrandRepositorie>();
+builder.Services.AddScoped<IRepositorie<CartItem>, dbCartItemRepositorie>();
+builder.Services.AddScoped<IRepositorie<Category>, dbCategoryRepositorie>();
+builder.Services.AddScoped<IRepositorie<Order>, dbOrderRepositorie>();
+builder.Services.AddScoped<IRepositorie<OrderDetail>, dbOrderDetailRepositorie>();
+builder.Services.AddScoped<IRepositorie<OrderItem>, dbOrderItemRepositorie>();
+builder.Services.AddScoped<IRepositorie<Product>, dbProductRepositorie>();
+builder.Services.AddScoped<IRepositorie<ProductReview>, dbProductReviewRepositorie>();
+builder.Services.AddScoped<IRepositorie<User>, dbUserRepositorie>();
+builder.Services.AddScoped<IRepositorie<UserType>, dbUserTypeRepositorie>();
 
 ////////////////////////////////////////////////////
 
@@ -42,7 +51,7 @@ app.UseRouting(); // Controller/Action
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Country}/{action=Index}/{id?}"
+    pattern: "{controller=Product}/{action=Index}/{id?}"
     );
 
 

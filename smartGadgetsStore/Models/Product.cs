@@ -10,20 +10,19 @@ namespace smartGadgetsStore.Models
         [MaxLength(150)]
         public string Name { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         public int QuantityInStock { get; set; }
-
+        [Required]
         public decimal Price { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        public string ImageURL { get; set; }
-
+        public string? ImageURL { get; set; }
+        [Required]
         public int BrandID { get; set; }
-        public Brand Brand { get; set; }
-
+        [Required]
         public int CategoryID { get; set; }
-        public Category Category { get; set; }
+        
     }
 }

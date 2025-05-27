@@ -6,8 +6,11 @@ namespace smartGadgetsStore.Models
     {
         public int UserID { get; set; }
         [Required]
+        [MaxLength(50)]
+        public string UserName { get; set; }
+        [Required]
         [MaxLength(100)]
-        public string FullName { get; set; }
+        public string? FullName { get; set; }
 
         [Required]
         [MaxLength(255)]
@@ -17,20 +20,17 @@ namespace smartGadgetsStore.Models
         public string Phone { get; set; }
         [MaxLength(255)]
         public string Address { get; set; }
+        public int UserTypeID { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        [Required]
-        [MaxLength(20)]
-        public string Role { get; set; } = "customer";
+        
         [Required]
         [EmailAddress]
         [MaxLength(150)]
         public string Email { get; set; }
 
-         public ICollection<Order> Orders { get; set; }
-        public ICollection<ProductReviews> Reviews { get; set; }
-        public ICollection<CartItem> CartItems { get; set; }
+         
 
     }
 }

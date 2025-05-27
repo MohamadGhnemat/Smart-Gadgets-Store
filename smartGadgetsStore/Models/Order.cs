@@ -7,7 +7,6 @@ namespace smartGadgetsStore.Models
         public int OrderID { get; set; }
 
         public int UserID { get; set; }
-        public User User { get; set; }
 
         [Required]
         [MaxLength(20)]
@@ -18,7 +17,6 @@ namespace smartGadgetsStore.Models
 
         public DateTime OrderDate { get; set; } = DateTime.Now;
 
-        
-        public ICollection<OrderItem> OrderItems { get; set; }
+  
     }
 }

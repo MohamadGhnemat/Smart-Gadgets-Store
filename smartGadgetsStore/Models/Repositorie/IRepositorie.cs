@@ -2,11 +2,11 @@
 {
     public interface IRepositorie<TEntity>
     {
-        //EF 
-        IList<TEntity> View();  //Select * from table 
-        void Add(TEntity entity);  //Insert
-        void Update(int Id, TEntity entity); //Update
-        void Delete(int Id, TEntity entity);   //Delete
-        TEntity Find(int Id);   // Select * from table where ID = .
+        IList<TEntity> View();
+        void Add(TEntity entity);
+        void Update(int Id, TEntity entity);
+        void Delete(int Id, TEntity entity);
+        TEntity Find(int Id);
+
     }
 }
