@@ -1,5 +1,7 @@
 ﻿
 
+using Microsoft.EntityFrameworkCore;
+
 namespace smartGadgetsStore.Models.Repositorie
 {
     public class dbOrderDetailRepositorie : IRepositorie<OrderDetail>
@@ -24,7 +26,7 @@ namespace smartGadgetsStore.Models.Repositorie
 
         public OrderDetail Find(int Id)
         {
-            return db.OrderDetails.SingleOrDefault(x => x.OrderDetailID == Id);
+            return db.OrderDetails.Include(x => x.Product).Include(x => x.Order).ThenInclude(O => O.User).SingleOrDefault(x => x.OrderDetailID == Id);
         }
 
         public void Update(int Id, OrderDetail entity)
@@ -35,7 +37,7 @@ namespace smartGadgetsStore.Models.Repositorie
 
         public IList<OrderDetail> View()
         {
-            return db.OrderDetails.ToList();
+            return db.OrderDetails.Include(x => x.Product).Include(x => x.Order).ThenInclude(O => O.User).ToList();
         }
     }
 }

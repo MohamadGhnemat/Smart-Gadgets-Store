@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace smartGadgetsStore.Models.Repositorie
 {
     public class dbProductReviewRepositorie : IRepositorie<ProductReview>
@@ -24,7 +26,7 @@ namespace smartGadgetsStore.Models.Repositorie
 
         public ProductReview Find(int Id)
         {
-            return db.ProductReviews.SingleOrDefault(x => x.ProductReviewID == Id);
+            return db.ProductReviews.Include(x => x.Product).Include(x => x.User).SingleOrDefault(x => x.ProductReviewID == Id);
         }
 
         public void Update(int Id, ProductReview entity)
@@ -35,7 +37,7 @@ namespace smartGadgetsStore.Models.Repositorie
 
         public IList<ProductReview> View()
         {
-            return db.ProductReviews.ToList();
+            return db.ProductReviews.Include(x=>x.Product).Include(x=>x.User).ToList();
         }
     }
 }

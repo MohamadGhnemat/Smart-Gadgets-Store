@@ -2,15 +2,20 @@
 using Microsoft.AspNetCore.Mvc;
 using smartGadgetsStore.Models;
 using smartGadgetsStore.Models.Repositorie;
+using smartGadgetsStore.ViewModels;
 
 namespace smartGadgetsStore.Controllers
 {
     public class OrderItemController : Controller
     {
         IRepositorie<OrderItem> OrderItemRepo;
-        public OrderItemController(IRepositorie<OrderItem> repositorie)
+        IRepositorie<Order> OrderRepo;
+        IRepositorie<Product> ProductRepo;
+        public OrderItemController(IRepositorie<OrderItem> repositorie, IRepositorie<Order> repositorie1, IRepositorie<Product> repositorie2)
         {
             OrderItemRepo = repositorie;
+            OrderRepo = repositorie1;
+            ProductRepo = repositorie2;
         }
         // GET: OrderItemController
         public ActionResult Index()
@@ -29,7 +34,11 @@ namespace smartGadgetsStore.Controllers
         // GET: OrderItemController/Create
         public ActionResult Create()
         {
-            return View();
+            var obj = new VwOrderItemProductOrder { 
+              lstOrders  = OrderRepo.View().ToList(),
+               lstProducts = ProductRepo.View().ToList(),
+            };
+            return View(obj);
         }
 
         // POST: OrderItemController/Create
@@ -52,7 +61,17 @@ namespace smartGadgetsStore.Controllers
         public ActionResult Edit(int id)
         {
             var data = OrderItemRepo.Find(id);
-            return View(data);
+            var obj = new VwOrderItemProductOrder
+            {
+                OrderItemID = data.OrderItemID,
+                OrderID =data.OrderID,
+                ProductID =data.ProductID,
+                Quantity =data.Quantity,
+                UnitPrice =data.UnitPrice,
+                lstOrders = OrderRepo.View().ToList(),
+                lstProducts = ProductRepo.View().ToList(),
+            };
+            return View(obj);
         }
 
         // POST: OrderItemController/Edit/5

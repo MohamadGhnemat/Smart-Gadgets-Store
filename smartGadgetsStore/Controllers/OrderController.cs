@@ -2,15 +2,19 @@
 using Microsoft.AspNetCore.Mvc;
 using smartGadgetsStore.Models;
 using smartGadgetsStore.Models.Repositorie;
+using smartGadgetsStore.ViewModels;
 
 namespace smartGadgetsStore.Controllers
 {
     public class OrderController : Controller
     {
         IRepositorie<Order> OrderRepo;
-        public OrderController(IRepositorie<Order> repositorie)
+        IRepositorie<User> UserRepo;
+
+        public OrderController(IRepositorie<Order> repositorie , IRepositorie<User> repositorie1)
         {
             OrderRepo = repositorie;
+            UserRepo = repositorie1;
         }
         // GET: OrderController
         public ActionResult Index()
@@ -29,7 +33,11 @@ namespace smartGadgetsStore.Controllers
         // GET: OrderController/Create
         public ActionResult Create()
         {
-            return View();
+            var obj = new VwOrderUser
+            {
+                lstUsers = UserRepo.View().ToList(),
+                };
+            return View(obj);
         }
 
         // POST: OrderController/Create
@@ -52,7 +60,16 @@ namespace smartGadgetsStore.Controllers
         public ActionResult Edit(int id)
         {
             var data = OrderRepo.Find(id);
-            return View(data);
+            var obj = new VwOrderUser
+            {
+                OrderID =data.OrderID,
+                UserID= data.UserID,
+                Status = data.Status,
+                TotalAmount = data.TotalAmount,
+                OrderDate = data.OrderDate,
+                lstUsers = UserRepo.View().ToList(),
+            };
+            return View(obj);
         }
 
         // POST: OrderController/Edit/5

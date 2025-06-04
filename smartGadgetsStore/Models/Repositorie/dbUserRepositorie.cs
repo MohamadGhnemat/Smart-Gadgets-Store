@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace smartGadgetsStore.Models.Repositorie
 {
     public class dbUserRepositorie : IRepositorie<User>
@@ -23,7 +25,7 @@ namespace smartGadgetsStore.Models.Repositorie
 
         public User Find(int Id)
         {
-            return db.Users.SingleOrDefault(x => x.UserID == Id);
+            return db.Users.Include(x => x.UserType).SingleOrDefault(x => x.UserID == Id);
         }
 
         public void Update(int Id, User entity)
@@ -34,7 +36,7 @@ namespace smartGadgetsStore.Models.Repositorie
 
         public IList<User> View()
         {
-           return db.Users.ToList();
+           return db.Users.Include(x=>x.UserType).ToList();
         }
     }
 }

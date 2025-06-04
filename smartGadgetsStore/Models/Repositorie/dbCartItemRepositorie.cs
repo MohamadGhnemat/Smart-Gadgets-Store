@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace smartGadgetsStore.Models.Repositorie
 {
     public class dbCartItemRepositorie : IRepositorie<CartItem>
@@ -24,7 +26,7 @@ namespace smartGadgetsStore.Models.Repositorie
 
         public CartItem Find(int Id)
         {
-            return db.CartItems.SingleOrDefault(x => x.CartItemID == Id);
+            return db.CartItems.Include(x => x.User).Include(x => x.Product).SingleOrDefault(x => x.CartItemID == Id);
         }
 
         public void Update(int Id, CartItem entity)
@@ -35,7 +37,7 @@ namespace smartGadgetsStore.Models.Repositorie
 
         public IList<CartItem> View()
         {
-            return db.CartItems.ToList();
+            return db.CartItems.Include(x=>x.User).Include(x=>x.Product).ToList();
         }
     }
 }

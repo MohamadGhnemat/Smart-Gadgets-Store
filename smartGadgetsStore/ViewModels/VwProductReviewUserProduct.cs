@@ -1,18 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using smartGadgetsStore.Models;
+using System.ComponentModel.DataAnnotations;
 
-namespace smartGadgetsStore.Models
+namespace smartGadgetsStore.ViewModels
 {
-    public class ProductReview
+    public class VwProductReviewUserProduct
     {
         public int ProductReviewID { get; set; }
 
         public int ProductID { get; set; }
         public Product Product { get; set; }
+        public List<Product> lstProducts { get; set; }
 
         public int UserID { get; set; }
         public User User { get; set; }
+        public List<User> lstUsers { get; set; }
 
-  
+
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 

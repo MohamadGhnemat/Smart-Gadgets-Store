@@ -8,6 +8,7 @@ namespace smartGadgetsStore.Models
     public int BrandId { get; set; }
         [Required]
         [MaxLength(100)]
+        [Display(Name = "BrandName")]
         public string Name { get; set; }
 
     public string Country { get; set; }

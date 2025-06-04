@@ -1,18 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using smartGadgetsStore.Models;
+using System.ComponentModel.DataAnnotations;
 
-namespace smartGadgetsStore.Models
+namespace smartGadgetsStore.ViewModels
 {
-    public class User
+    public class VwUserUserType
     {
+
         public int UserID { get; set; }
-        [Required]
+     
         [MaxLength(50)]
         public string UserName { get; set; }
-        [Required]
+      
         [MaxLength(100)]
         public string? FullName { get; set; }
 
-        [Required]
+
         [MaxLength(255)]
         public string PasswordHash { get; set; }
         [Phone]
@@ -22,18 +24,18 @@ namespace smartGadgetsStore.Models
         public string Address { get; set; }
         public int UserTypeID { get; set; }
 
-        
+
         public UserType UserType { get; set; }
+        public List<UserType> lstUserTypes { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        
+
         [Required]
         [EmailAddress]
         [MaxLength(150)]
         public string Email { get; set; }
 
-         
 
     }
 }

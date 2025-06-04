@@ -2,15 +2,20 @@
 using Microsoft.AspNetCore.Mvc;
 using smartGadgetsStore.Models;
 using smartGadgetsStore.Models.Repositorie;
+using smartGadgetsStore.ViewModels;
 
 namespace smartGadgetsStore.Controllers
 {
     public class ProductController : Controller
     {
         IRepositorie<Product> ProductRepo;
-        public ProductController(IRepositorie<Product> repositorie)
+        IRepositorie<Category> CategoryRepo;
+        IRepositorie<Brand> BrandRepo;
+        public ProductController(IRepositorie<Product> repositorie, IRepositorie<Category> repositorie1, IRepositorie<Brand> repositorie2)
         {
             ProductRepo = repositorie;
+            CategoryRepo = repositorie1;
+            BrandRepo = repositorie2;
         }
         // GET: ProductController
         public ActionResult Index()
@@ -29,7 +34,12 @@ namespace smartGadgetsStore.Controllers
         // GET: ProductController/Create
         public ActionResult Create()
         {
-            return View();
+            var obj = new VwProductBrandCategory
+            {
+                lstBrands = BrandRepo.View().ToList(),
+                lstCategories = CategoryRepo.View().ToList(),
+            };
+            return View(obj);
         }
 
         // POST: ProductController/Create
@@ -52,7 +62,21 @@ namespace smartGadgetsStore.Controllers
         public ActionResult Edit(int id)
         {
             var data = ProductRepo.Find(id);
-            return View(data);
+            var obj = new VwProductBrandCategory
+            {
+                 ProductID = data.ProductID ,
+                Name = data.Name ,
+                Description = data.Description ,
+                QuantityInStock = data.QuantityInStock ,
+                Price = data.Price ,
+                CreatedAt = data.CreatedAt ,
+                ImageURL = data.ImageURL ,
+                BrandID = data.BrandID ,
+                CategoryID = data.CategoryID ,
+                lstBrands = BrandRepo.View().ToList(),
+                lstCategories = CategoryRepo.View().ToList(),
+            };
+            return View(obj);
         }
 
         // POST: ProductController/Edit/5

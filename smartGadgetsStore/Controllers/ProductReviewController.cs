@@ -2,15 +2,20 @@
 using Microsoft.AspNetCore.Mvc;
 using smartGadgetsStore.Models;
 using smartGadgetsStore.Models.Repositorie;
+using smartGadgetsStore.ViewModels;
 
 namespace smartGadgetsStore.Controllers
 {
     public class ProductReviewController : Controller
     {
         IRepositorie<ProductReview> ProductReviewRepo;
-        public ProductReviewController(IRepositorie<ProductReview> repositorie)
+        IRepositorie<Product> ProductRepo;
+        IRepositorie<User> UserRepo;
+        public ProductReviewController(IRepositorie<ProductReview> repositorie , IRepositorie<Product> repositorie1, IRepositorie<User> repositorie2)
         {
             ProductReviewRepo = repositorie;
+            ProductRepo = repositorie1;
+            UserRepo = repositorie2;
         }
         // GET: ProductReviewController
         public ActionResult Index()
@@ -29,7 +34,12 @@ namespace smartGadgetsStore.Controllers
         // GET: ProductReviewController/Create
         public ActionResult Create()
         {
-            return View();
+            var obj = new VwProductReviewUserProduct
+            {
+               lstProducts = ProductRepo.View().ToList(),
+               lstUsers = UserRepo.View().ToList(),
+            };
+            return View(obj);
         }
 
         // POST: ProductReviewController/Create
@@ -52,7 +62,18 @@ namespace smartGadgetsStore.Controllers
         public ActionResult Edit(int id)
         {
             var data = ProductReviewRepo.Find(id);
-            return View(data);
+            var obj = new VwProductReviewUserProduct
+            {
+                ProductReviewID = data.ProductReviewID,
+                ProductID = data.ProductID,
+                UserID = data.UserID,
+                CreatedAt = data.CreatedAt,
+                Rating = data.Rating,
+                ReviewText=data.ReviewText,
+                lstProducts = ProductRepo.View().ToList(),
+                lstUsers = UserRepo.View().ToList(),
+            };
+            return View(obj);
         }
 
         // POST: ProductReviewController/Edit/5

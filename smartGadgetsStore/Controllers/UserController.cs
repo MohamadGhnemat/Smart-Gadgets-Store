@@ -2,15 +2,18 @@
 using Microsoft.AspNetCore.Mvc;
 using smartGadgetsStore.Models;
 using smartGadgetsStore.Models.Repositorie;
+using smartGadgetsStore.ViewModels;
 
 namespace smartGadgetsStore.Controllers
 {
     public class UserController : Controller
     {
         IRepositorie<User> UserRepo;
-        public UserController(IRepositorie<User> repositorie)
+        IRepositorie<UserType> UserTypeRepo;
+        public UserController(IRepositorie<User> repositorie, IRepositorie<UserType> repositorie1)
         {
             UserRepo = repositorie;
+            UserTypeRepo = repositorie1;
         }
         // GET: UserController
         public ActionResult Index()
@@ -29,7 +32,11 @@ namespace smartGadgetsStore.Controllers
         // GET: UserController/Create
         public ActionResult Create()
         {
-            return View();
+            var obj = new VwUserUserType
+            {
+                lstUserTypes = UserTypeRepo.View().ToList(),
+            };
+            return View(obj);
         }
 
         // POST: UserController/Create
@@ -52,7 +59,20 @@ namespace smartGadgetsStore.Controllers
         public ActionResult Edit(int id)
         {
             var data = UserRepo.Find(id);
-            return View(data);
+            var obj = new VwUserUserType
+            {
+                UserID=data.UserID ,
+                UserName = data.UserName ,
+                FullName = data.FullName ,
+                PasswordHash = data.PasswordHash ,
+                Phone = data.Phone ,
+                Address = data.Address ,
+                UserTypeID = data.UserTypeID ,
+                CreatedAt = data.CreatedAt ,
+                Email = data.Email ,
+                lstUserTypes = UserTypeRepo.View().ToList(),
+            };
+            return View(obj);
         }
 
         // POST: UserController/Edit/5

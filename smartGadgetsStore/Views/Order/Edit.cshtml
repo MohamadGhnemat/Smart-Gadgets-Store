@@ -1,4 +1,4 @@
-﻿@model smartGadgetsStore.Models.Order
+﻿@model smartGadgetsStore.ViewModels.VwOrderUser
 
 @{
     // Layout = null;
@@ -21,8 +21,10 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="OrderID" />
             <div class="form-group">
-                <label asp-for="UserID" class="control-label"></label>
-                <input asp-for="UserID" class="form-control" />
+                    <label asp-for="@Model.User.FullName" class="control-label"></label>
+                @* <input asp-for="UserID" class="form-control" /> *@
+                    <select asp-for="UserID" class="form-control"
+                            asp-items="@(new SelectList(Model.lstUsers,"UserID","FullName"))"> </select>
                 <span asp-validation-for="UserID" class="text-danger"></span>
             </div>
             <div class="form-group">

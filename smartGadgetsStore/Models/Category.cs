@@ -7,6 +7,8 @@ namespace smartGadgetsStore.Models
         public int CategoryID { get; set; }
         [Required]
         [MaxLength(100)]
+
+        [Display(Name = "CategoryName")]
         public string Name { get; set; }
 
         public string Description { get; set; }
